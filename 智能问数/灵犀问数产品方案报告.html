@@ -1,0 +1,1213 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>恩核「灵犀问数」产品方案</title>
+    <!-- Google Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link
+        href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Noto+Sans+SC:wght@400;500;700&display=swap"
+        rel="stylesheet">
+
+    <style>
+        :root {
+            /* HSL Color Palette for richer tones */
+            --primary-hsl: 222, 47%, 11%;
+            /* Deep Slate */
+            --accent-hsl: 250, 60%, 65%;
+            /* Soft Violet */
+            --highlight-hsl: 210, 100%, 56%;
+            /* Bright Blue */
+
+            --bg-gradient-start: #f8fafc;
+            --bg-gradient-end: #e2e8f0;
+
+            --card-bg: rgba(255, 255, 255, 0.85);
+            --card-border: rgba(255, 255, 255, 0.5);
+            --glass-shadow: 0 8px 32px 0 rgba(31, 38, 135, 0.07);
+
+            --text-main: #1e293b;
+            --text-muted: #64748b;
+
+            --radius-lg: 24px;
+            --radius-sm: 12px;
+        }
+
+        body {
+            font-family: 'Inter', 'Noto Sans SC', sans-serif;
+            background: linear-gradient(135deg, var(--bg-gradient-start) 0%, var(--bg-gradient-end) 100%);
+            color: var(--text-main);
+            line-height: 1.8;
+            margin: 0;
+            padding: 0;
+            min-height: 100vh;
+        }
+
+        .container {
+            max-width: 1280px;
+            margin: 0 auto;
+            padding: 2.5rem 2rem 5rem 2rem;
+            /* Reduced top padding from 5rem to 2.5rem */
+        }
+
+        /* Ambient Background blobs */
+        .ambient-light {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            pointer-events: none;
+            z-index: -1;
+            overflow: hidden;
+        }
+
+        .ambient-light::before,
+        .ambient-light::after {
+            content: '';
+            position: absolute;
+            width: 800px;
+            height: 800px;
+            border-radius: 50%;
+            filter: blur(100px);
+            opacity: 0.3;
+        }
+
+        .ambient-light::before {
+            background: radial-gradient(circle, #e0e7ff 0%, transparent 70%);
+            top: -200px;
+            left: -200px;
+        }
+
+        .ambient-light::after {
+            background: radial-gradient(circle, #f3e8ff 0%, transparent 70%);
+            bottom: -200px;
+            right: -200px;
+        }
+
+        /* Typography Enhancements */
+        h1 {
+            font-size: 3.5rem;
+            text-align: center;
+            margin-bottom: 2rem;
+            /* Reduced from 4rem */
+            letter-spacing: -0.02em;
+            background: linear-gradient(135deg, #1e293b 0%, #3b82f6 50%, #8b5cf6 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            text-shadow: 0 4px 12px rgba(0, 0, 0, 0.05);
+            font-weight: 800;
+        }
+
+        h2 {
+            font-size: 2rem;
+            margin-top: 0;
+            margin-bottom: 2rem;
+            font-weight: 700;
+            display: flex;
+            align-items: center;
+            color: var(--text-main);
+        }
+
+        h2::before {
+            content: '';
+            display: block;
+            width: 6px;
+            height: 32px;
+            background: linear-gradient(to bottom, #3b82f6, #8b5cf6);
+            border-radius: 4px;
+            margin-right: 16px;
+        }
+
+        h3 {
+            font-size: 1.4rem;
+            margin-top: 2.5rem;
+            margin-bottom: 1rem;
+            color: #334155;
+            font-weight: 600;
+        }
+
+        p,
+        li {
+            font-size: 1.05rem;
+            color: var(--text-muted);
+        }
+
+        strong {
+            color: var(--text-main);
+            font-weight: 600;
+        }
+
+        /* Glassmorphism Cards */
+        .section-card {
+            background: var(--card-bg);
+            backdrop-filter: blur(12px);
+            -webkit-backdrop-filter: blur(12px);
+            border: 1px solid var(--card-border);
+            border-radius: var(--radius-lg);
+            box-shadow: var(--glass-shadow);
+            padding: 3.5rem;
+            margin-bottom: 3rem;
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+        }
+
+        .section-card:hover {
+            transform: translateY(-4px);
+            box-shadow: 0 20px 40px -5px rgba(0, 0, 0, 0.08), 0 8px 16px -6px rgba(0, 0, 0, 0.05);
+        }
+
+        /* Modern Table */
+        table {
+            width: 100%;
+            border-collapse: separate;
+            border-spacing: 0;
+            margin: 2.5rem 0;
+            border-radius: var(--radius-sm);
+            overflow: hidden;
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.03);
+            border: 1px solid #e2e8f0;
+        }
+
+        th {
+            background-color: #f1f5f9;
+            color: #475569;
+            font-weight: 600;
+            padding: 1.25rem;
+            text-transform: uppercase;
+            font-size: 0.85rem;
+            letter-spacing: 0.05em;
+        }
+
+        td {
+            padding: 1.25rem;
+            border-top: 1px solid #e2e8f0;
+            background: white;
+        }
+
+        tr:hover td {
+            background-color: #f8fafc;
+        }
+
+        /* Diagram Containers - NO SCROLLBARS */
+        .diagram-container {
+            width: 100%;
+            margin: 3rem 0;
+            border-radius: var(--radius-lg);
+            overflow: hidden;
+            box-shadow: 0 20px 40px rgba(0, 0, 0, 0.08);
+            background: white;
+            border: 1px solid rgba(0, 0, 0, 0.05);
+            /* Aspect ratio trick or fixed height calc can be used, but iframe height is key */
+            display: flex;
+            justify-content: center;
+        }
+
+        iframe {
+            width: 100%;
+            border: none;
+            display: block;
+            /* Hide scrollbars strictly */
+            overflow: hidden;
+        }
+
+        /* Tags and Visuals */
+        .tag {
+            display: inline-flex;
+            align-items: center;
+            padding: 0.35rem 0.8rem;
+            border-radius: 8px;
+            font-size: 0.85rem;
+            font-weight: 600;
+            margin-right: 0.6rem;
+            line-height: 1;
+            border: 1px solid transparent;
+        }
+
+        .tag-blue {
+            background-color: rgba(59, 130, 246, 0.1);
+            color: #2563eb;
+            border-color: rgba(59, 130, 246, 0.2);
+        }
+
+        .tag-green {
+            background-color: rgba(16, 185, 129, 0.1);
+            color: #059669;
+            border-color: rgba(16, 185, 129, 0.2);
+        }
+
+        .tag-purple {
+            background-color: rgba(139, 92, 246, 0.1);
+            color: #7c3aed;
+            border-color: rgba(139, 92, 246, 0.2);
+        }
+
+        blockquote {
+            background: linear-gradient(to right, #f8fafc, white);
+            border-left: 4px solid #8b5cf6;
+            margin: 2rem 0;
+            padding: 1.5rem 2rem;
+            border-radius: 0 12px 12px 0;
+            color: #475569;
+            font-style: italic;
+            box-shadow: 0 4px 6px -2px rgba(0, 0, 0, 0.02);
+        }
+    </style>
+</head>
+
+<body>
+
+    <div class="container">
+        <!-- Header -->
+        <h1>恩核「灵犀问数」产品方案</h1>
+
+        <!-- 1. 产品概述 -->
+        <section class="section-card">
+            <h2>1. 产品概述 (Product Overview)</h2>
+
+            <h3>1.1 产品简介</h3>
+            <p><strong>灵犀问数</strong>
+                是一款连接企业数据治理资产与大语言模型（LLM）的智能问数（Text-to-Data）平台。它旨在通过自然语言交互，帮助业务人员直接获取数据洞察，实现从“人找数据”到“数据找人”的范式转变。</p>
+
+            <h3>1.2 产品定位</h3>
+            <ul>
+                <li><strong>定位</strong>：企业级智能问数中间件与分析 Agent。</li>
+                <li><strong>核心逻辑</strong>：左侧对接数据治理及资产平台（元数据来源），中间通过灵犀问数引擎进行语义转换与推理，右侧支撑各类智能体与分析报告。</li>
+                <li><strong>价值主张</strong>：
+                    <ul>
+                        <li><span class="tag tag-blue">查得准</span> 利用“治理即语义”消除大模型幻觉。</li>
+                        <li><span class="tag tag-green">可视快</span> 自动生成 SQL 并推荐合适的图表展示。</li>
+                        <li><span class="tag tag-purple">资产活</span> 将静态的数据治理成果转化为动态的 AI 上下文。</li>
+                    </ul>
+                </li>
+            </ul>
+
+            <!-- EMBEDDED DIAGRAM 1: Product Logic Diagram -->
+            <div class="diagram-container">
+                <canvas id="logicCanvas"></canvas>
+            </div>
+            <script>
+                (function () {
+                    const canvas = document.getElementById('logicCanvas');
+                    // Canvas Config
+                    const WIDTH = 1200;
+                    const HEIGHT = 800;
+                    const SCALE = 2; // For Retina
+
+                    canvas.width = WIDTH * SCALE;
+                    canvas.height = HEIGHT * SCALE;
+                    canvas.style.width = "100%";
+                    canvas.style.maxWidth = WIDTH + "px";
+                    canvas.style.height = "auto";
+
+                    const ctx = canvas.getContext('2d');
+                    ctx.scale(SCALE, SCALE);
+
+                    // Colors & Constants from original file
+                    const COLORS = {
+                        bg: '#ffffff',
+                        text: '#1f2937',
+                        textLight: '#6b7280',
+                        line: '#e5e7eb',
+                        left: { primary: '#0ea5e9', light: '#e0f2fe', border: '#7dd3fc' },
+                        middle: { primary: '#8b5cf6', light: '#ede9fe', border: '#c4b5fd' },
+                        right: { primary: '#10b981', light: '#d1fae5', border: '#6ee7b7' },
+                        bottom: { primary: '#334155', light: '#cbd5e1', border: '#94a3b8' },
+                        arrow: '#9ca3af'
+                    };
+                    const BOX_WIDTH = 280;
+                    const BOX_HEIGHT = 320;
+                    const GAP = 120;
+                    const START_X = (WIDTH - (3 * BOX_WIDTH + 2 * GAP)) / 2;
+                    const START_Y = 220;
+
+                    const data = [
+                        { title: "数据供给端 (Input)", subtitle: "数据治理与资产平台", desc: "提供高质量的元数据与标准", color: COLORS.left, items: ["数据标准 (Standards)", "技术/业务元数据", "数据血缘 (Lineage)", "数据权限 (Policy)"], x: START_X, y: START_Y },
+                        { title: "核心引擎 (Core)", subtitle: "灵犀问数「中间件」", desc: "语义转换、推理与安全管控", color: COLORS.middle, items: ["语义建模 (MDL)", "Text-to-SQL", "RAG 增强检索", "语义级 RLS 管控"], x: START_X + BOX_WIDTH + GAP, y: START_Y },
+                        { title: "应用消费端 (Output)", subtitle: "智能体与业务场景", desc: "数据价值释放与决策支撑", color: COLORS.right, items: ["经营驾驶舱 Copilot", "嵌入式业务助手", "智能分析报告", "治理反哺与辅助"], x: START_X + (BOX_WIDTH + GAP) * 2, y: START_Y }
+                    ];
+
+                    function drawRoundedRect(ctx, x, y, width, height, radius) {
+                        ctx.beginPath();
+                        ctx.moveTo(x + radius, y);
+                        ctx.lineTo(x + width - radius, y);
+                        ctx.quadraticCurveTo(x + width, y, x + width, y + radius);
+                        ctx.lineTo(x + width, y + height - radius);
+                        ctx.quadraticCurveTo(x + width, y + height, x + width - radius, y + height);
+                        ctx.lineTo(x + radius, y + height);
+                        ctx.quadraticCurveTo(x, y + height, x, y + height - radius);
+                        ctx.lineTo(x, y + radius);
+                        ctx.quadraticCurveTo(x, y, x + radius, y);
+                        ctx.closePath();
+                    }
+
+                    function draw() {
+                        ctx.clearRect(0, 0, WIDTH, HEIGHT);
+                        drawFlowArrows();
+                        drawInfrastructureLayer();
+                        drawVerticalArrows();
+                        data.forEach((box, index) => drawCard(box, index));
+
+                        // Title
+                        ctx.fillStyle = COLORS.text;
+                        ctx.font = "bold 32px sans-serif";
+                        ctx.textAlign = "center";
+                        ctx.fillText("灵犀问数：产品定位与核心逻辑架构", WIDTH / 2, 60);
+                        ctx.font = "18px sans-serif";
+                        ctx.fillStyle = COLORS.textLight;
+                        ctx.fillText("连接底层全域数据与上层智能应用的中间件", WIDTH / 2, 105);
+                    }
+
+                    function drawInfrastructureLayer() {
+                        const layerY = START_Y + BOX_HEIGHT + 60;
+                        const layerHeight = 160;
+                        const layerWidth = (BOX_WIDTH * 3) + (GAP * 2);
+                        const layerX = START_X;
+
+                        ctx.save();
+                        ctx.shadowColor = "rgba(0, 0, 0, 0.05)";
+                        ctx.shadowBlur = 10;
+                        ctx.shadowOffsetY = 5;
+                        ctx.fillStyle = "#ffffff";
+                        drawRoundedRect(ctx, layerX, layerY, layerWidth, layerHeight, 16);
+                        ctx.fill();
+                        ctx.restore();
+
+                        ctx.strokeStyle = COLORS.bottom.border;
+                        ctx.lineWidth = 1;
+                        ctx.stroke();
+
+                        ctx.fillStyle = COLORS.bottom.light;
+                        ctx.save();
+                        drawRoundedRect(ctx, layerX, layerY, layerWidth, layerHeight, 16);
+                        ctx.clip();
+                        ctx.fillRect(layerX, layerY, layerWidth, 50);
+                        ctx.restore();
+
+                        ctx.textAlign = "center";
+                        ctx.fillStyle = COLORS.text;
+                        ctx.font = "bold 18px sans-serif";
+                        ctx.fillText("底层数据基础设施 (Data Infrastructure)", layerX + layerWidth / 2, layerY + 32);
+
+                        const subBlockWidth = (layerWidth - 60) / 2;
+                        const subBlockHeight = 80;
+                        const subBlockY = layerY + 65;
+                        drawSubBlock(layerX + 20, subBlockY, subBlockWidth, subBlockHeight, "结构化数据 (Structured)", "业务数据库 | 数据仓库 | 数据湖");
+                        drawSubBlock(layerX + 40 + subBlockWidth, subBlockY, subBlockWidth, subBlockHeight, "非结构化/外部数据 (Unstructured/External)", "文档知识库 | 行业研报 | 外部 API");
+                    }
+
+                    function drawSubBlock(x, y, w, h, title, content) {
+                        ctx.fillStyle = "#e2e8f0";
+                        ctx.strokeStyle = '#94a3b8';
+                        ctx.lineWidth = 1;
+                        ctx.setLineDash([5, 5]);
+                        drawRoundedRect(ctx, x, y, w, h, 8);
+                        ctx.fill();
+                        ctx.stroke();
+                        ctx.setLineDash([]);
+
+                        ctx.fillStyle = '#475569';
+                        ctx.font = "bold 14px sans-serif";
+                        ctx.textAlign = "center";
+                        ctx.fillText(title, x + w / 2, y + 30);
+                        ctx.fillStyle = '#94a3b8';
+                        ctx.font = "14px sans-serif";
+                        ctx.fillText(content, x + w / 2, y + 55);
+                    }
+
+                    function drawVerticalArrows() {
+                        ctx.lineWidth = 3;
+                        ctx.strokeStyle = '#cbd5e1';
+                        // Matches infrastructure gap (60px)
+                        const bottomY = START_Y + BOX_HEIGHT + 60;
+                        const topY = START_Y + BOX_HEIGHT + 10;
+
+                        drawVerticalArrow(START_X + BOX_WIDTH / 2, bottomY, topY, "元数据抽取");
+                        drawTwoWayArrow(START_X + BOX_WIDTH + GAP + BOX_WIDTH / 2, bottomY, topY, "SQL查询/执行");
+                    }
+
+                    function drawVerticalArrow(x, y1, y2, label) {
+                        ctx.beginPath();
+                        ctx.moveTo(x, y1);
+                        ctx.lineTo(x, y2 + 10);
+                        ctx.stroke();
+                        ctx.beginPath();
+                        ctx.moveTo(x - 5, y2 + 10);
+                        ctx.lineTo(x, y2);
+                        ctx.lineTo(x + 5, y2 + 10);
+                        ctx.fill();
+                        ctx.textAlign = "left";
+                        ctx.fillStyle = '#94a3b8';
+                        ctx.fillText(label, x + 12, (y1 + y2) / 2 + 5);
+                    }
+
+                    function drawTwoWayArrow(x, y1, y2, label) {
+                        ctx.beginPath();
+                        ctx.moveTo(x, y1 - 10);
+                        ctx.lineTo(x, y2 + 10);
+                        ctx.stroke();
+                        ctx.beginPath();
+                        ctx.moveTo(x - 5, y2 + 10);
+                        ctx.lineTo(x, y2);
+                        ctx.lineTo(x + 5, y2 + 10);
+                        ctx.fill();
+                        ctx.beginPath();
+                        ctx.moveTo(x - 5, y1 - 10);
+                        ctx.lineTo(x, y1);
+                        ctx.lineTo(x + 5, y1 - 10);
+                        ctx.fill();
+                        ctx.textAlign = "left";
+                        ctx.fillStyle = '#94a3b8';
+                        ctx.fillText(label, x + 12, (y1 + y2) / 2 + 5);
+                    }
+
+                    function drawCard(box, index) {
+                        const { x, y, color } = box;
+                        ctx.shadowColor = "rgba(0, 0, 0, 0.1)";
+                        ctx.shadowBlur = 15;
+                        ctx.shadowOffsetY = 10;
+                        ctx.fillStyle = "#ffffff";
+                        drawRoundedRect(ctx, x, y, BOX_WIDTH, BOX_HEIGHT, 16);
+                        ctx.fill();
+                        ctx.shadowColor = "transparent";
+
+                        ctx.fillStyle = color.light;
+                        ctx.save();
+                        drawRoundedRect(ctx, x, y, BOX_WIDTH, BOX_HEIGHT, 16);
+                        ctx.clip();
+                        ctx.fillRect(x, y, BOX_WIDTH, 90);
+                        ctx.restore();
+
+                        ctx.lineWidth = 1;
+                        ctx.strokeStyle = color.border;
+                        drawRoundedRect(ctx, x, y, BOX_WIDTH, BOX_HEIGHT, 16);
+                        ctx.stroke();
+
+                        ctx.textAlign = "center";
+                        ctx.fillStyle = color.primary;
+                        ctx.font = "bold 14px sans-serif";
+                        ctx.fillText(box.title.toUpperCase(), x + BOX_WIDTH / 2, y + 30);
+
+                        ctx.fillStyle = COLORS.text;
+                        ctx.font = "bold 20px sans-serif";
+                        ctx.fillText(box.subtitle, x + BOX_WIDTH / 2, y + 60);
+
+                        ctx.fillStyle = COLORS.textLight;
+                        ctx.font = "14px sans-serif";
+                        ctx.fillText(box.desc, x + BOX_WIDTH / 2, y + 115);
+
+                        ctx.beginPath();
+                        ctx.moveTo(x + 30, y + 135);
+                        ctx.lineTo(x + BOX_WIDTH - 30, y + 135);
+                        ctx.strokeStyle = '#f3f4f6';
+                        ctx.lineWidth = 2;
+                        ctx.stroke();
+
+                        ctx.textAlign = "left";
+                        box.items.forEach((item, i) => {
+                            const itemY = y + 170 + (i * 35);
+                            const itemX = x + 30;
+                            ctx.fillStyle = color.primary;
+                            ctx.beginPath();
+                            ctx.arc(itemX, itemY - 5, 4, 0, Math.PI * 2);
+                            ctx.fill();
+                            ctx.fillStyle = COLORS.text;
+                            ctx.font = "15px sans-serif";
+                            ctx.fillText(item, itemX + 15, itemY);
+                        });
+                    }
+
+                    function drawFlowArrows() {
+                        ctx.lineWidth = 4;
+                        ctx.lineCap = "round";
+                        drawConnectArrow(START_X + BOX_WIDTH, START_Y + BOX_HEIGHT / 2, START_X + BOX_WIDTH + GAP, START_Y + BOX_HEIGHT / 2, "元数据注入");
+                        drawConnectArrow(START_X + BOX_WIDTH * 2 + GAP, START_Y + BOX_HEIGHT / 2, START_X + (BOX_WIDTH + GAP) * 2, START_Y + BOX_HEIGHT / 2, "赋能与支撑");
+                        drawFeedbackArrow();
+                    }
+
+                    function drawConnectArrow(x1, y1, x2, y2, label) {
+                        const arrowSize = 10;
+                        ctx.strokeStyle = '#cbd5e1';
+                        ctx.setLineDash([0]);
+                        ctx.beginPath();
+                        ctx.moveTo(x1 + 10, y1);
+                        ctx.lineTo(x2 - 15, y2);
+                        ctx.stroke();
+
+                        ctx.fillStyle = '#cbd5e1';
+                        ctx.beginPath();
+                        ctx.moveTo(x2 - 15, y2 - arrowSize);
+                        ctx.lineTo(x2 - 5, y2);
+                        ctx.lineTo(x2 - 15, y2 + arrowSize);
+                        ctx.fill();
+
+                        ctx.fillStyle = '#f3f4f6';
+                        const textWidth = ctx.measureText(label).width;
+                        const midX = (x1 + x2) / 2;
+                        ctx.fillRect(midX - textWidth / 2 - 5, y1 - 25, textWidth + 10, 20);
+
+                        ctx.fillStyle = '#9ca3af';
+                        ctx.font = "bold 12px sans-serif";
+                        ctx.textAlign = "center";
+                        ctx.fillText(label, midX, y1 - 10);
+                    }
+
+                    function drawFeedbackArrow() {
+                        const startX = START_X + (BOX_WIDTH + GAP) * 2 + BOX_WIDTH / 2;
+                        const startY = START_Y - 10;
+                        const endX = START_X + BOX_WIDTH / 2;
+                        const endY = START_Y - 10;
+                        const loopHeight = 50;
+                        const loopY = START_Y - loopHeight;
+
+                        ctx.strokeStyle = '#fca5a5';
+                        ctx.setLineDash([5, 5]);
+                        ctx.lineWidth = 2;
+                        ctx.lineJoin = 'round';
+
+                        ctx.beginPath();
+                        ctx.moveTo(startX, startY);
+                        ctx.lineTo(startX, loopY);
+                        ctx.lineTo(endX, loopY);
+                        ctx.lineTo(endX, endY);
+                        ctx.stroke();
+                        ctx.setLineDash([]);
+
+                        ctx.fillStyle = '#fca5a5';
+                        ctx.font = "bold 12px sans-serif";
+                        ctx.textAlign = "center";
+                        ctx.fillText("用管共生：应用反馈反哺治理", (startX + endX) / 2, loopY - 10);
+
+                        ctx.beginPath();
+                        ctx.moveTo(endX - 5, endY - 10);
+                        ctx.lineTo(endX, endY);
+                        ctx.lineTo(endX + 5, endY - 10);
+                        ctx.fill();
+                    }
+
+                    draw();
+                })();
+            </script>
+
+        </section>
+
+        <!-- 2. 核心竞争力 -->
+        <section class="section-card">
+            <h2>2. 核心竞争力与差异化 (Key Differentiators)</h2>
+            <p>针对市面上通用 Text-to-SQL 产品的准确性低、权限管控难、应用与治理脱节等痛点，灵犀问数构建了独特的<strong>“管用一体”</strong>生态优势：</p>
+
+            <ol>
+                <li>
+                    <strong>治理即语义：以管奠基用 (Governance as Semantics)</strong>
+                    <ul>
+                        <li><strong>原理</strong>：不直接读取物理数据库 Schema，而是通过<strong>元数据注入管道 (Metadata Injection
+                                Pipeline)</strong>，将经过治理的标准指标、口径定义自动转化为语义模型（MDL）。</li>
+                        <li><strong>价值</strong>：将静态的数据标准转化为动态的 AI 上下文，结合 <strong>RAG</strong>
+                            技术，从源头消解大模型对业务术语理解的二义性，确保“查得准”。</li>
+                    </ul>
+                </li>
+                <li>
+                    <strong>用管共生：以用反哺管 (Usage-Driven Governance Synergy)</strong>
+                    <ul>
+                        <li><strong>理念</strong>：超越单向利用，构建<strong>“以管赋能用，以用促管”</strong>的双向飞轮，实现数据资产的自进化。</li>
+                        <li><strong>机制</strong>：
+                            <ul>
+                                <li><strong>价值量化</strong>：通过分析用户的自然语言提问热度，自动生成数据资产的“热力图”，帮助治理团队将资源精准投放到高频核心资产上。</li>
+                                <li><strong>众筹式治理</strong>：将用户的每一次 SQL
+                                    修正、点赞/踩、口径疑问（如“含不含税？”）转化为高价值的<strong>“治理信号”</strong>实时回流至资产平台。让业务一线成为治理的参与者，驱动指标口径的持续校准与完善。
+                                </li>
+                            </ul>
+                        </li>
+                    </ul>
+                </li>
+                <li>
+                    <strong>企业级安全管控：全域护航 (Enterprise-Grade Security)</strong>
+                    <ul>
+                        <li><strong>语义级 RLS</strong>：在语义层而非仅数据库层实施权限控制。根据用户 Token 动态注入过滤条件，确保 AI 生成的 SQL 永远不会突破用户的权限范围。
+                        </li>
+                        <li><strong>数据不出域</strong>：支持 vLLM + 开源模型（如 Qwen 2.5-Coder）的完全私有化运行，构建物理隔离的安全围栏。</li>
+                    </ul>
+                </li>
+            </ol>
+        </section>
+
+        <!-- 3. 技术架构设计 -->
+        <section class="section-card">
+            <h2>3. 技术架构设计 (Technical Architecture)</h2>
+            <p>本项目采用 <strong>前后端分离 (Decoupled)</strong> 与 <strong>Headless BI</strong> 的架构模式，确保灵活性与可扩展性。</p>
+
+            <h3>3.1 总体架构图谱</h3>
+            <p>系统划分为四层：</p>
+
+            <table>
+                <thead>
+                    <tr>
+                        <th>架构层级</th>
+                        <th>核心组件</th>
+                        <th>技术选型</th>
+                        <th>核心职责</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td><strong>交互层 (Frontend)</strong></td>
+                        <td>智能问答 Console, 嵌入式 SDK</td>
+                        <td><strong>Next.js 14+</strong>, <strong>Shadcn/UI</strong>, ECharts</td>
+                        <td>用户意图捕获、流式渲染、可视化展示</td>
+                    </tr>
+                    <tr>
+                        <td><strong>编排层 (Service)</strong></td>
+                        <td>API网关, 任务路由, 上下文管理</td>
+                        <td><strong>FastAPI (Python)</strong>, <strong>LiteLLM</strong></td>
+                        <td>鉴权、限流、模型统一适配、任务分发</td>
+                    </tr>
+                    <tr>
+                        <td><strong>语义智能层 (Core)</strong></td>
+                        <td>语义建模引擎(MDL), 向量服务</td>
+                        <td><strong>Wren Engine</strong>, <strong>Vanna</strong>, Qdrant</td>
+                        <td>元数据转语义模型、RAG 检索、SQL 生成</td>
+                    </tr>
+                    <tr>
+                        <td><strong>基础设施层 (Infra)</strong></td>
+                        <td>私有模型推理, 数据仓储</td>
+                        <td><strong>vLLM</strong>, PostgreSQL, Trino</td>
+                        <td>算力供给(Qwen/DeepSeek)、数据存储</td>
+                    </tr>
+                </tbody>
+            </table>
+
+            <!-- EMBEDDED DIAGRAM 2: Architecture Diagram -->
+            <div class="diagram-container">
+                <canvas id="architectureCanvas"></canvas>
+            </div>
+            <script>
+                (function () {
+                    const canvas = document.getElementById('architectureCanvas');
+                    const WIDTH = 1150;
+                    const HEIGHT = 850;
+                    const SCALE = 2; // Retina Support
+
+                    canvas.width = WIDTH * SCALE;
+                    canvas.height = HEIGHT * SCALE;
+                    canvas.style.width = "100%"; // Responsive
+                    canvas.style.maxWidth = WIDTH + "px";
+                    canvas.style.height = "auto";
+
+                    const ctx = canvas.getContext('2d');
+                    ctx.scale(SCALE, SCALE);
+
+                    const colors = {
+                        infra: { bg: '#E3F2FD', border: '#1565C0', text: '#0D47A1' },
+                        core: { bg: '#E8F5E9', border: '#2E7D32', text: '#1B5E20' },
+                        service: { bg: '#FFF3E0', border: '#EF6C00', text: '#E65100' },
+                        frontend: { bg: '#F3E5F5', border: '#7B1FA2', text: '#4A148C' },
+                        label: '#333333',
+                        arrow: '#666666'
+                    };
+
+                    const layers = [
+                        {
+                            id: 'frontend',
+                            title: '交互层 (Frontend)',
+                            desc: '用户意图捕获、流式渲染、可视化展示',
+                            components: [
+                                { name: 'Next.js 14+', desc: 'App Router 架构，支持 SSR 与流式渲染' },
+                                { name: 'Shadcn/UI', desc: '现代化、无障碍的 UI 组件系统' },
+                                { name: 'ECharts', desc: '交互式图表与数据可视化' },
+                                { name: 'Zustand', desc: '轻量级状态管理库' },
+                                { name: 'React-Markdown', desc: 'Markdown 与 LaTeX 数学公式渲染' }
+                            ],
+                            style: colors.frontend,
+                            y: 100
+                        },
+                        {
+                            id: 'service',
+                            title: '编排层 (Service)',
+                            desc: '鉴权、限流、模型统一适配、任务分发',
+                            components: [
+                                { name: 'FastAPI', desc: '高性能异步 Python 后端框架' },
+                                { name: 'LiteLLM', desc: '统一大模型网关 (兼容 OpenAI 接口)' },
+                                { name: 'Context Manager', desc: '对话上下文与历史记录管理' },
+                                { name: 'Task Router', desc: '异步任务分发与队列管理' }
+                            ],
+                            style: colors.service,
+                            y: 290
+                        },
+                        {
+                            id: 'core',
+                            title: '语义智能层 (Core)',
+                            desc: '核心引擎: 元数据转语义模型、RAG 检索、SQL 生成',
+                            components: [
+                                { name: 'Wren Engine', desc: '语义建模 (MDL) 与 Text-to-SQL 核心' },
+                                { name: 'Vanna.ai', desc: 'RAG 检索与 Schema 链接 (Schema Linking)' },
+                                { name: 'Qdrant', desc: '用于语义搜索的向量数据库' }
+                            ],
+                            style: colors.core,
+                            y: 480
+                        },
+                        {
+                            id: 'infra',
+                            title: '基础设施层 (Infra)',
+                            desc: '算力供给、模型推理、数据仓储',
+                            components: [
+                                { name: 'vLLM', desc: '高吞吐大模型推理引擎' },
+                                { name: 'PostgreSQL', desc: '应用数据持久化存储' },
+                                { name: 'Trino', desc: '联邦 SQL 查询引擎' },
+                                { name: 'Qwen/DeepSeek', desc: '开源权重基础大模型' }
+                            ],
+                            style: colors.infra,
+                            y: 670
+                        }
+                    ];
+
+                    // Draw Title
+                    ctx.font = 'bold 28px sans-serif';
+                    ctx.fillStyle = '#1a1a1a';
+                    ctx.textAlign = 'center';
+                    ctx.fillText('灵犀问数 - 系统分层架构与组件详解', WIDTH / 2, 50);
+
+                    function roundRect(ctx, x, y, width, height, radius, fill, stroke) {
+                        if (typeof stroke === 'undefined') { stroke = true; }
+                        if (typeof radius === 'undefined') { radius = 5; }
+                        ctx.beginPath();
+                        ctx.moveTo(x + radius, y);
+                        ctx.lineTo(x + width - radius, y);
+                        ctx.quadraticCurveTo(x + width, y, x + width, y + radius);
+                        ctx.lineTo(x + width, y + height - radius);
+                        ctx.quadraticCurveTo(x + width, y + height, x + width - radius, y + height);
+                        ctx.lineTo(x + radius, y + height);
+                        ctx.quadraticCurveTo(x, y + height, x, y + height - radius);
+                        ctx.lineTo(x, y + radius);
+                        ctx.quadraticCurveTo(x, y, x + radius, y);
+                        ctx.closePath();
+                        if (fill) { ctx.fill(); }
+                        if (stroke) { ctx.stroke(); }
+                    }
+
+                    const layerWidth = 600;
+                    const layerHeight = 150;
+                    const xStart = 50;
+                    const detailXStart = xStart + layerWidth + 60;
+
+                    layers.forEach((layer, index) => {
+                        ctx.fillStyle = layer.style.bg;
+                        ctx.strokeStyle = layer.style.border;
+                        ctx.lineWidth = 2;
+                        roundRect(ctx, xStart, layer.y, layerWidth, layerHeight, 15, true, true);
+
+                        ctx.fillStyle = layer.style.text;
+                        ctx.font = 'bold 20px sans-serif';
+                        ctx.textAlign = 'left';
+                        ctx.fillText(layer.title, xStart + 20, layer.y + 35);
+
+                        ctx.fillStyle = '#555';
+                        ctx.font = 'italic 14px sans-serif';
+                        ctx.fillText(layer.desc, xStart + 20, layer.y + 60);
+
+                        ctx.beginPath();
+                        ctx.moveTo(xStart + 20, layer.y + 75);
+                        ctx.lineTo(xStart + layerWidth - 20, layer.y + 75);
+                        ctx.strokeStyle = 'rgba(0,0,0,0.1)';
+                        ctx.lineWidth = 1;
+                        ctx.stroke();
+
+                        let currentX = xStart + 20;
+                        const pillY = layer.y + 95;
+                        ctx.font = '13px sans-serif';
+
+                        layer.components.forEach(comp => {
+                            const textWidth = ctx.measureText(comp.name).width;
+                            const pillWidth = textWidth + 20;
+                            ctx.fillStyle = '#fff';
+                            ctx.strokeStyle = layer.style.border;
+                            ctx.lineWidth = 1;
+                            roundRect(ctx, currentX, pillY, pillWidth, 28, 14, true, true);
+                            ctx.fillStyle = '#333';
+                            ctx.textAlign = 'center';
+                            ctx.fillText(comp.name, currentX + pillWidth / 2, pillY + 19);
+                            currentX += pillWidth + 8;
+                        });
+
+                        // Right side details
+                        let detailY = layer.y + 10;
+                        const detailRowHeight = 32;
+                        ctx.textAlign = 'left';
+
+                        layer.components.forEach(comp => {
+                            ctx.fillStyle = layer.style.text;
+                            ctx.beginPath();
+                            ctx.arc(detailXStart, detailY, 3, 0, Math.PI * 2);
+                            ctx.fill();
+                            ctx.font = 'bold 14px sans-serif';
+                            ctx.fillStyle = '#333';
+                            ctx.fillText(comp.name + ':', detailXStart + 15, detailY + 5);
+                            const nameWidth = ctx.measureText(comp.name + ':').width;
+                            ctx.font = '14px sans-serif';
+                            ctx.fillStyle = '#666';
+                            ctx.fillText(comp.desc, detailXStart + 15 + nameWidth + 10, detailY + 5);
+                            detailY += detailRowHeight;
+                        });
+                    });
+
+                    // Separator
+                    const separatorX = xStart + layerWidth + 30;
+                    ctx.beginPath();
+                    ctx.moveTo(separatorX, 80);
+                    ctx.lineTo(separatorX, 820);
+                    ctx.strokeStyle = '#e0e0e0';
+                    ctx.lineWidth = 2;
+                    ctx.setLineDash([8, 8]);
+                    ctx.stroke();
+                    ctx.setLineDash([]);
+
+                    // Arrows
+                    ctx.strokeStyle = '#999';
+                    ctx.fillStyle = '#999';
+                    ctx.lineWidth = 2;
+                    const arrowX = xStart + layerWidth / 2;
+
+                    for (let i = 0; i < layers.length - 1; i++) {
+                        const upperBottomY = layers[i].y + layerHeight;
+                        const lowerTopY = layers[i + 1].y;
+                        ctx.beginPath();
+                        ctx.moveTo(arrowX, lowerTopY);
+                        ctx.lineTo(arrowX, upperBottomY + 5);
+                        ctx.stroke();
+                        ctx.beginPath();
+                        ctx.moveTo(arrowX - 6, upperBottomY + 10);
+                        ctx.lineTo(arrowX, upperBottomY);
+                        ctx.lineTo(arrowX + 6, upperBottomY + 10);
+                        ctx.fill();
+                    }
+                })();
+            </script>
+
+            <h3>3.2 技术栈选型 (Technology Stack)</h3>
+
+            <h4>前端 (Frontend)</h4>
+            <ul>
+                <li><strong>框架</strong>: <strong>Next.js 14+ (App Router)</strong> - 支持 SSR/CSR 及优秀的流式数据支持。</li>
+                <li><strong>语言</strong>: <strong>TypeScript</strong> - 保证类型安全。</li>
+                <li><strong>UI 组件</strong>: <strong>Shadcn/UI + Tailwind CSS</strong> - 现代化、轻量级、符合 ChatGPT 风格的交互体验。</li>
+                <li><strong>Markdown/代码渲染</strong>: `react-markdown` (支持 LaTeX, Mermaid), `react-syntax-highlighter`。
+                </li>
+                <li><strong>状态管理</strong>: Zustand.</li>
+            </ul>
+
+            <h4>后端 (Backend)</h4>
+            <ul>
+                <li><strong>核心框架</strong>: <strong>Python 3.10+</strong>, <strong>FastAPI</strong> - 高性能异步框架，原生支持 SSE
+                    流式响应。</li>
+                <li><strong>模型网关</strong>: <strong>LiteLLM</strong> - 统一管理 OpenAI, DeepSeek, Claude 等模型调用，实现“模型防腐层”。
+                </li>
+                <li><strong>语义引擎</strong>:
+                    <ul>
+                        <li><strong>WrenAI Core</strong>: 负责语义建模（MDL）与精准 SQL 生成。</li>
+                        <li><strong>Vanna.ai</strong>: 负责非结构化文档、业务口径描述的 RAG 检索。</li>
+                    </ul>
+                </li>
+                <li><strong>数据验证</strong>: Pydantic.</li>
+                <li><strong>ORM</strong>: SQLAlchemy / Prisma.</li>
+            </ul>
+
+            <blockquote>
+                <strong>这里的关键设计：</strong>
+                后端通过 <strong>FastAPI</strong> 封装核心业务逻辑，下层调用 <strong>LiteLLM</strong> 统一大模型接口，同时集成 <strong>Wren
+                    Engine</strong> 处理结构化查询，集成 <strong>Vanna</strong> 处理非结构化辅助信息。
+            </blockquote>
+
+        </section>
+
+        <!-- 4. 核心功能组件与流程 -->
+        <section class="section-card">
+            <h2>4. 核心功能组件与流程 (Key Features & Data Flow)</h2>
+
+            <h3>4.1 前端交互组件</h3>
+            <ol>
+                <li><strong>`ChatInterface`</strong>: 主控组件，管理 `messages[]` 状态，处理 SSE 流式数据。实现“打字机”滚动效果。</li>
+                <li><strong>`ThinkingBubble` (思维链可视化)</strong>: 专门解析推理模型（如 DeepSeek-R1）的 `<think>...</think>`
+                    标签。默认折叠，点击展开，将 AI 的“思考过程”与“最终结论”视觉分离。</li>
+                <li><strong>`MessageRenderer`</strong>: 区分 User/Assistant 样式。支持 Markdown 表格、ECharts 图表动态渲染。</li>
+            </ol>
+
+            <!-- EMBEDDED DIAGRAM 3: Interaction Diagram -->
+            <div class="diagram-container">
+                <canvas id="interactionCanvas"></canvas>
+            </div>
+            <script>
+                (function () {
+                    const canvas = document.getElementById('interactionCanvas');
+                    const WIDTH = 1000;
+                    const HEIGHT = 600;
+                    const SCALE = 2; // Retina Support
+
+                    canvas.width = WIDTH * SCALE;
+                    canvas.height = HEIGHT * SCALE;
+                    canvas.style.width = "100%"; // Responsive
+                    canvas.style.maxWidth = WIDTH + "px";
+                    canvas.style.height = "auto";
+
+                    const ctx = canvas.getContext('2d');
+                    ctx.scale(SCALE, SCALE);
+
+                    const FE_BG = '#E3F2FD';
+                    const FE_BORDER = '#2196F3';
+                    const FE_TITLE = '#0D47A1';
+                    const BE_BG = '#E8F5E9';
+                    const BE_BORDER = '#4CAF50';
+                    const BE_TITLE = '#1B5E20';
+                    const DB_BG = '#FFF3E0';
+                    const DB_BORDER = '#FF9800';
+
+                    function roundRect(ctx, x, y, width, height, radius, fillStyle, strokeStyle) {
+                        if (typeof radius === 'undefined') radius = 5;
+                        ctx.beginPath();
+                        ctx.moveTo(x + radius, y);
+                        ctx.lineTo(x + width - radius, y);
+                        ctx.quadraticCurveTo(x + width, y, x + width, y + radius);
+                        ctx.lineTo(x + width, y + height - radius);
+                        ctx.quadraticCurveTo(x + width, y + height, x + width - radius, y + height);
+                        ctx.lineTo(x + radius, y + height);
+                        ctx.quadraticCurveTo(x, y + height, x, y + height - radius);
+                        ctx.lineTo(x, y + radius);
+                        ctx.quadraticCurveTo(x, y, x + radius, y);
+                        ctx.closePath();
+                        if (fillStyle) { ctx.fillStyle = fillStyle; ctx.fill(); }
+                        if (strokeStyle) { ctx.strokeStyle = strokeStyle; ctx.lineWidth = 2; ctx.stroke(); }
+                    }
+
+                    function drawComponent(ctx, x, y, w, h, text, subtext, bgColor) {
+                        ctx.shadowColor = 'rgba(0,0,0,0.1)';
+                        ctx.shadowBlur = 4;
+                        ctx.shadowOffsetX = 2;
+                        ctx.shadowOffsetY = 2;
+                        roundRect(ctx, x, y, w, h, 8, bgColor || '#FFFFFF', '#ddd');
+                        ctx.shadowColor = 'transparent';
+                        ctx.fillStyle = '#333';
+                        ctx.textAlign = 'center';
+                        ctx.font = 'bold 14px sans-serif';
+                        ctx.fillText(text, x + w / 2, y + 25);
+                        if (subtext) {
+                            ctx.fillStyle = '#666';
+                            ctx.font = '11px sans-serif';
+                            ctx.fillText(subtext, x + w / 2, y + 45);
+                        }
+                    }
+
+                    // Title
+                    ctx.font = 'bold 24px sans-serif';
+                    ctx.fillStyle = '#1a1a1a';
+                    ctx.textAlign = 'center';
+                    ctx.fillText('灵犀问数 - 前后端交互与数据流架构', WIDTH / 2, 40);
+
+                    // Containers
+                    roundRect(ctx, 30, 80, 400, 450, 15, FE_BG, FE_BORDER);
+                    ctx.fillStyle = FE_TITLE;
+                    ctx.font = 'bold 18px sans-serif';
+                    ctx.textAlign = 'left';
+                    ctx.fillText('Frontend (交互层)', 50, 110);
+
+                    roundRect(ctx, 570, 80, 400, 450, 15, BE_BG, BE_BORDER);
+                    ctx.fillStyle = BE_TITLE;
+                    ctx.font = 'bold 18px sans-serif';
+                    ctx.fillText('Backend (服务与智能层)', 590, 110);
+
+                    // Front Components
+                    drawComponent(ctx, 60, 140, 340, 70, 'ChatInterface', 'SSE流式接收 / 消息状态管理');
+                    drawComponent(ctx, 60, 240, 150, 60, 'ThinkingBubble', '思维链可视化 (<think>)');
+                    drawComponent(ctx, 250, 240, 150, 60, 'ECharts / Table', '图表与数据渲染');
+                    drawComponent(ctx, 60, 340, 340, 50, 'Request/Response Handler', 'Axios / EventSource / Markdown解析');
+
+                    // Back Components
+                    drawComponent(ctx, 600, 140, 340, 60, 'FastAPI (API Gateway)', '路由分发 / 鉴权 / SSE推送');
+                    drawComponent(ctx, 600, 230, 160, 80, 'Wren Engine', 'Text-to-SQL\n语义建模 (MDL)');
+                    drawComponent(ctx, 780, 230, 160, 80, 'Vanna.ai (RAG)', '非结构化检索\nSchema Linking');
+                    drawComponent(ctx, 600, 340, 340, 50, 'LiteLLM (Model Gateway)', '统一模型接口 / 负载均衡');
+
+                    // Databases
+                    roundRect(ctx, 600, 420, 100, 80, 10, DB_BG, DB_BORDER);
+                    ctx.fillStyle = '#E65100';
+                    ctx.textAlign = 'center';
+                    ctx.font = 'bold 13px sans-serif';
+                    ctx.fillText('Business DB', 650, 450);
+                    ctx.font = '11px sans-serif';
+                    ctx.fillText('(Trino/PG)', 650, 470);
+
+                    roundRect(ctx, 720, 420, 100, 80, 10, '#E1BEE7', '#8E24AA');
+                    ctx.fillStyle = '#4A148C';
+                    ctx.textAlign = 'center';
+                    ctx.font = 'bold 13px sans-serif';
+                    ctx.fillText('Vector DB', 770, 450);
+                    ctx.fillText('(Qdrant)', 770, 470);
+
+                    roundRect(ctx, 840, 420, 100, 80, 10, '#CFD8DC', '#455A64');
+                    ctx.fillStyle = '#263238';
+                    ctx.textAlign = 'center';
+                    ctx.font = 'bold 13px sans-serif';
+                    ctx.fillText('vLLM / LLM', 890, 450);
+                    ctx.fillText('(Qwen/DeepSeek)', 890, 470);
+
+                    // Arrows
+                    function drawArrow(ctx, x1, y1, x2, y2, label, color) {
+                        ctx.beginPath();
+                        ctx.moveTo(x1, y1);
+                        ctx.lineTo(x2, y2);
+                        ctx.strokeStyle = color || '#555';
+                        ctx.lineWidth = 2;
+                        ctx.stroke();
+                        const angle = Math.atan2(y2 - y1, x2 - x1);
+                        ctx.beginPath();
+                        ctx.moveTo(x2, y2);
+                        ctx.lineTo(x2 - 10 * Math.cos(angle - Math.PI / 6), y2 - 10 * Math.sin(angle - Math.PI / 6));
+                        ctx.lineTo(x2 - 10 * Math.cos(angle + Math.PI / 6), y2 - 10 * Math.sin(angle + Math.PI / 6));
+                        ctx.fill();
+                        if (label) {
+                            const midX = (x1 + x2) / 2;
+                            const midY = (y1 + y2) / 2;
+                            ctx.fillStyle = '#fff';
+                            const width = ctx.measureText(label).width + 10;
+                            ctx.fillRect(midX - width / 2, midY - 10, width, 20);
+                            ctx.fillStyle = color || '#333';
+                            ctx.font = '12px sans-serif';
+                            ctx.textAlign = 'center';
+                            ctx.fillText(label, midX, midY + 4);
+                        }
+                    }
+
+                    drawArrow(ctx, 430, 160, 570, 160, '1. Question', '#1976D2');
+                    drawArrow(ctx, 770, 200, 770, 230, '', '#555');
+                    drawArrow(ctx, 680, 200, 680, 230, '', '#555');
+                    drawArrow(ctx, 680, 310, 680, 340, '', '#555');
+                    drawArrow(ctx, 860, 310, 860, 340, '', '#555');
+                    drawArrow(ctx, 770, 390, 890, 420, 'Inference', '#555');
+                    drawArrow(ctx, 650, 310, 650, 420, 'SQL Exec', '#F57C00');
+                    drawArrow(ctx, 860, 310, 770, 420, 'Retrieve', '#7B1FA2');
+                    drawArrow(ctx, 570, 180, 430, 180, '2. SSE Stream', '#388E3C');
+                    drawArrow(ctx, 230, 340, 230, 210, 'Render', '#999');
+                })();
+            </script>
+
+            <h3>4.2 核心数据流：流式对话与查询</h3>
+            <ol>
+                <li><strong>用户提问</strong>：用户输入“上个月华东区销售额为何下降？”。</li>
+                <li><strong>意图识别 & 路由</strong>：后端判断意图（数据查询 vs 归因分析）。</li>
+                <li><strong>Schema Linking (Schema 链接)</strong>：利用元数据中的“数据域”标签，仅加载相关域（如“销售域”）的 MDL 模型。Vanna
+                    检索相关的业务口径说明（如“销售额不含退款”）。</li>
+                <li><strong>SQL 生成</strong>：Inject 元数据 + 检索到的口径 + 用户问题 -> Prompt。LLM 生成 SQL。</li>
+                <li><strong>安全校验 & 执行</strong>：解析 Token，注入 RLS 过滤条件（如 `WHERE dept_id = '1001'`）。语法树（AST）校验 SQL
+                    安全性。数据库执行查询。</li>
+                <li><strong>流式响应</strong>：结果以 SSE (Server-Sent Events) 格式流式推送到前端。前端逐步渲染：“思考过程” -> “生成的 SQL” -> “数据表格/图表”
+                    -> “文字总结”。</li>
+            </ol>
+        </section>
+
+        <!-- 5. 落地路线图 -->
+        <section class="section-card">
+            <h2>5. 落地路线图 (Roadmap)</h2>
+
+            <h3>第一阶段：MVP —— 领域 Copilot (1-3个月)</h3>
+            <ul>
+                <li><strong>目标</strong>：单一业务领域（如销售）验证端到端可行性。</li>
+                <li><strong>动作</strong>：
+                    <ul>
+                        <li>部署 WrenAI (Docker) + vLLM (Qwen 2.5-Coder-32B)。</li>
+                        <li>人工构建销售域“黄金标准” MDL 模型。</li>
+                        <li>开发基础 Chat 界面，集成 SSO。</li>
+                    </ul>
+                </li>
+                <li><strong>交付</strong>：内部可用的销售数据助手，SQL 准确率 > 80%。</li>
+            </ul>
+
+            <h3>第二阶段：产品化 —— 治理驱动的自动化平台 (4-8个月)</h3>
+            <ul>
+                <li><strong>目标</strong>：实现元数据自动化注入，发布标准化 SDK。</li>
+                <li><strong>动作</strong>：
+                    <ul>
+                        <li>开发 <strong>Metadata Syncer</strong>：对接数据治理平台，自动生成 MDL。</li>
+                        <li>实现 <strong>语义级 RLS</strong> 权限控制。</li>
+                        <li>封装 `
+                            <SmartQueryChat />` SDK，嵌入 CRM/ERP 系统。
+                        </li>
+                    </ul>
+                </li>
+                <li><strong>交付</strong>：灵犀问数平台 V1.0，支持多领域自动接入。</li>
+            </ul>
+
+            <h3>第三阶段：成熟期 —— 自主智能 Agent (9-12个月+)</h3>
+            <ul>
+                <li><strong>目标</strong>：从“被动查询”转向“主动分析”。</li>
+                <li><strong>动作</strong>：
+                    <ul>
+                        <li>引入 <strong>Self-Correction</strong>：SQL 报错自动修正。</li>
+                        <li><strong>主动洞察</strong>：分析数据波动原因，进行异常预警。</li>
+                        <li><strong>RLHF 微调</strong>：利用积累的问答对微调私有模型，彻底掌握“企业方言”。</li>
+                    </ul>
+                </li>
+                <li><strong>交付</strong>：虚拟数据分析师 (Virtual Analyst)。</li>
+            </ul>
+        </section>
+
+        <!-- 6. 未来应用场景 -->
+        <section class="section-card">
+            <h2>6. 未来应用场景 (Future Application Scenarios)</h2>
+
+            <h3>6.1 业务赋能型场景 (Business-Oriented)</h3>
+            <p>专注于降低数据获取门槛，通过对话式交互提升业务决策效率，让数据在业务流程中即时流动。</p>
+            <ul>
+                <li><strong>经营决策驾驶舱 (Executive Copilot)</strong>
+                    <ul>
+                        <li><strong>场景描述</strong>：企业高管与管理者无需打开复杂的固定报表，直接询问“本季度华东区利润率为何下滑？”，系统不仅以图表展示数据趋势，还能自动下钻维度，识别出是特定产品线或区域导致的问题。
+                        </li>
+                        <li><strong>价值</strong>：将决策信息获取周期从“天”级缩短至“分钟”级，支持实时决策。</li>
+                    </ul>
+                </li>
+                <li><strong>嵌入式业务助手 (Embedded Analytics)</strong>
+                    <ul>
+                        <li><strong>场景描述</strong>：以 SDK/Widget 形式无缝嵌入 CRM、ERP 或 OA 系统。例如，销售人员在 CRM
+                            查看客户详情时，可直接侧边栏提问“该客户过去三年的回款趋势如何？”，无需跳转至独立 BI 平台。</li>
+                        <li><strong>价值</strong>：实现“数据找人”，在业务发生的场景中即时提供数据支撑。</li>
+                    </ul>
+                </li>
+                <li><strong>智能归因与预警 (Automated Insight)</strong>
+                    <ul>
+                        <li><strong>场景描述</strong>：当监测到关键指标异常（如销量今日突降 20%）时，系统主动触发分析
+                            Agent，多维归因（价格变动、库存不足、竞品活动等），并主动推送简报给相关负责人。</li>
+                        <li><strong>价值</strong>：从被动查数转向主动预警与智能诊断。</li>
+                    </ul>
+                </li>
+            </ul>
+
+            <h3>6.2 治理与资产融合型场景 (Governance & Asset Integration)</h3>
+            <p>充分利用数据治理的成果反哺数据消费，同时通过问答交互促进治理闭环，让“沉睡”的资产活起来。</p>
+            <ul>
+                <li><strong>“所见即所问”的资产门户 (Ask the Asset)</strong>
+                    <ul>
+                        <li><strong>场景描述</strong>：用户在数据资产平台浏览数据地图或目录时，找到感兴趣的资产（如“客户360宽表”），可直接点击“对它提问”按钮。系统自动加载该资产的最新元数据上下文，用户即可开始自由查询，无需理解底层表结构或
+                            SQL。</li>
+                        <li><strong>价值</strong>：打通数据资产发现到数据消费的“最后一公里”，极大提升资产复用率。</li>
+                    </ul>
+                </li>
+                <li><strong>智能血缘与质量问答 (Meta-QA)</strong>
+                    <ul>
+                        <li><strong>场景描述</strong>：用户不仅可以查询数据本身，还可以查询数据的“元信息”。例如提问：“这个‘净利润’指标的计算口径是什么？”、“这个数据来源是哪里？最近一次更新时间？”、“这张表的数据质量评分是多少？”。
+                        </li>
+                        <li><strong>价值</strong>：建立用户对数据的信任度（Data Trust），让数据治理的隐性价值显性化，辅助用户判断数据可用性。</li>
+                    </ul>
+                </li>
+                <li><strong>治理辅助与影响分析 (Governance Assistant)</strong>
+                    <ul>
+                        <li><strong>场景描述</strong>：数据开发人员或治理专员可通过对话高效工作。例如：“如果我修改了‘订单表’的金额字段，会影响哪些下游报表和
+                            API？”系统基于元数据图谱自动分析并返回影响范围。</li>
+                        <li><strong>价值</strong>：通过自然语言交互降低专业治理工具的使用门槛，提升治理运维效率。</li>
+                    </ul>
+                </li>
+            </ul>
+        </section>
+
+    </div>
+
+</body>
+
+</html>
